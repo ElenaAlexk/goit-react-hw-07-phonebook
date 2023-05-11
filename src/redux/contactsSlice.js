@@ -38,6 +38,7 @@ const handleDeleteContactSuccess = (state, { payload }) => {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
+  //обробка зовнішніх екшенів
   extraReducers: {
     [fetchContacts.pending]: handlePending,
     [addContact.pending]: handlePending,
