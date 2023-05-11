@@ -29,8 +29,9 @@ export const ContactList = () => {
     <ul className={css.list}>
       {filteredContacts.map(({ id, name, phone }) => (
         <li className={css.contactItem} key={id}>
-          <span className={css.spanName}>{name}: </span>
-          <span className={css.spanNumber}>{phone}</span>
+          <p>
+            {name}: {phone}
+          </p>
           <button
             className={css.button}
             type="button"
