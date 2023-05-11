@@ -1,6 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getContacts, getFilter } from 'redux/selectors';
+import {
+  getContacts,
+  getFilter,
+  getIsLoading,
+  getError,
+} from 'redux/selectors';
 import PropTypes from 'prop-types';
 import css from './Contacts.module.css';
 import { fetchContacts, deleteContact } from 'redux/operations';
@@ -8,8 +13,8 @@ import { fetchContacts, deleteContact } from 'redux/operations';
 export const ContactList = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
-  //const isLoading = useSelector(getIsLoading);
-  //const error = useSelector(getError);
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,22 +31,26 @@ export const ContactList = () => {
   };
 
   return (
-    <ul className={css.list}>
-      {filteredContacts.map(({ id, name, phone }) => (
-        <li className={css.contactItem} key={id}>
-          <p>
-            {name}: {phone}
-          </p>
-          <button
-            className={css.button}
-            type="button"
-            onClick={() => onDeleteContact(id)}
-          >
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
+    <div>
+      {isLoading && <p>Loading contacts...</p>}
+      {error && <p>{error}</p>}
+      <ul className={css.list}>
+        {filteredContacts.map(({ id, name, phone }) => (
+          <li className={css.contactItem} key={id}>
+            <p>
+              {name}: {phone}
+            </p>
+            <button
+              className={css.button}
+              type="button"
+              onClick={() => onDeleteContact(id)}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
